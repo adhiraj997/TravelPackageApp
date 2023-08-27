@@ -1,26 +1,15 @@
-This file can be used as a template for initializing and running spring projects.
-
-What's included: 
-1. Gradle file created from start.spring.io
-2. Plugins for Spotbugs, Checkstyle and Jacoco included
-3. Other dependencies like Mongo, MySql and redis.
-4. Dockerfile to start mongo server and run the spring boot application within.
-
-Usage - 
-
-1. To build the repository - 
-
-From the repository root, 
-
-1. run `./gradlew build test`run the build
-2. run `./gradlew bootjar` to create executable jar. The jar will be located inside build directories.
-
-To run inside docker container, use below commands
-
-To build docker image, use the command below - `docker build -t your_tag_name  .`
-
-To run the generated container, use this command - `docker run -p8080:8080 your_tag_name`. This will run the server on 8080 port.. You can change the ports as per your needs. 
+This is an application that allows travel agencies to maintain their travel packages' itinerary and passengers.
 
 
-License - 
-While this repository is licensed under APACHE 2.0 license, It is mandatory for users to share the readme.md and License file along with the changes they do in the contents.
+# Specification
+
+1. Each travel package has a name, a passenger capacity, an itinerary (list of destinations) and a list of it's passenger.
+2. Each destination has a name, and a list of the activities available at that destination.
+3. Each activity has a name, a description, a cost and a capacity. Each activity is available at one destination only. 
+4. Each passenger can sign up for zero or more activity at each destination of the travel package.
+5. Once an activity has reached it's capacity no more passengers can sign up for it.
+6. Each passenger has a name and a passenger number. 
+7. A passenger can be a standard, gold or premium passenger. 
+    1. A standard passenger has a balance. And each time a standard passenger signs up for an activity the cost is deducted from their balance. They cannot sign up for an activity if they do not have sufficient balance.
+    2. A gold passenger has a balance. Each time a gold passenger signs up for an activity, a 10% discount is applied on the cost of the activity and the discounted amount is deducted from their balance. They cannot sign up for an activity if they do not have sufficient balance.
+    3. A premium passenger can sign up for activities for free.
