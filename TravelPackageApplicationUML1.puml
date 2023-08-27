@@ -1,0 +1,129 @@
+@startuml
+
+class Activity {
+    private String id;
+    private String name;
+    private String description;
+    private double cost;
+    private int capacity;
+    private Destination destination;
+    private List<Passenger> passengers = new ArrayList<>();
+
+    void addPassenger();
+    boolean hasSpace();
+
+   }
+
+   interface Passenger {
+
+       String getName();
+
+       int getNumber();
+       void signUpForActivity(Activity activity);
+       boolean hasSufficientBalance(double amount);
+       List<Activity> getSignedUpActivities();
+   }
+
+   class StandardPassenger implements Passenger {
+       private int id;
+       private String name;
+       private int number;
+       private double balance;
+       private List<Activity> signedUpActivities = new ArrayList<>();
+
+       public void signUpForActivity();
+
+       public boolean hasSufficientBalance();
+   }
+
+   class PremiumPassenger implements Passenger {
+       private int id;
+       private String name;
+       private int number;
+       private List<Activity> signedUpActivities = new ArrayList<>();
+       public void signUpForActivity();
+       public boolean hasSufficientBalance();
+   }
+
+   class GoldPassenger implements Passenger {
+       private int id;
+       private String name;
+       private int number;
+       private double balance;
+       private List<Activity> signedUpActivities = new ArrayList<>();
+       public void signUpForActivity();
+       public boolean hasSufficientBalance();
+   }
+
+   class Destination {
+       private String name;
+       private List<Activity> activities;
+
+       public void addActivity();
+   }
+
+   class TravelPackage {
+       @Id
+       private String id;
+       private String name;
+       private int passengerCapacity;
+       private List<Destination> destinations;
+       private List<Passenger> passengers;
+
+       public void addDestination();
+       public void addPassenger();
+   }
+
+   class ActivityController {
+
+       @Autowired
+       private ActivityService activityService;
+       public ResponseEntity<List<AvailableActivityResponse>> getAvailableActivities();
+       }
+
+   class PassengerController {
+
+       @Autowired
+       private PassengerService passengerService;
+       public ResponseEntity<Passenger> signUpForActivities();
+
+       public ResponseEntity<PassengerDetailsResponse> getPassengerDetails();
+   }
+
+   class TravelPackageController {
+     @Autowired
+     private TravelPackageService travelPackageService;
+     public ResponseEntity<TravelPackageItinerary> getItinerary();
+
+     public ResponseEntity<PassengerListResponse> getPassengerList();
+   }
+
+   interface ActivityRepository {
+       List<Activity> findByDestination(Destination destination);
+
+       @Aggregation(pipeline = {
+               "{$project: {_id: 1, name: 1, destination: '$destination', cost: 1, capacity: 1, passengers: 1, availableSpaces: {$subtract: ['$capacity', {$size: '$passengers'}]}}}",
+               "{$match: {availableSpaces: {$gt: 0}}}"
+       })
+       List<Activity> findByPassengersLessThanCapacity();
+   }
+
+   interface GoldPassengerRepository {
+       Optional<GoldPassenger> findByNumber(int number);
+   }
+
+   interface PremiumPassengerRepository {
+       Optional<PremiumPassenger> findByNumber(int number);
+   }
+
+   interface StandardPassengerRepository {
+       Optional<StandardPassenger> findByNumber(int number);
+   }
+
+   interface TravelPackageRepository {
+       Optional<TravelPackage> findById(String extId);
+   }
+
+
+
+@enduml

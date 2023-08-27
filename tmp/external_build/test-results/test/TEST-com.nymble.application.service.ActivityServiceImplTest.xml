@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.nymble.application.service.ActivityServiceImplTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-08-27T05:50:02" hostname="LAPTOP-IA38NU7V" time="1.384">
+  <properties/>
+  <testcase name="testFindActivityById_ExistingActivity()" classname="com.nymble.application.service.ActivityServiceImplTest" time="1.345"/>
+  <testcase name="testGetAvailableActivities()" classname="com.nymble.application.service.ActivityServiceImplTest" time="0.006"/>
+  <testcase name="testSaveActivity()" classname="com.nymble.application.service.ActivityServiceImplTest" time="0.018"/>
+  <testcase name="testFindActivityById_NonExistingActivity()" classname="com.nymble.application.service.ActivityServiceImplTest" time="0.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

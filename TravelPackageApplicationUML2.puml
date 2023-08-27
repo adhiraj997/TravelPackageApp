@@ -1,0 +1,76 @@
+@startuml
+
+interface ActivityService {
+       Activity signUpPassenger(Passenger passenger, String activityId);
+
+       Activity findActivityById(String activityId);
+
+       Activity saveActivity(Activity activity);
+
+       List<AvailableActivityResponse> getAvailableActivities();
+
+   }
+
+   interface PassengerService {
+       public Passenger signUpForActivities(int passengerNumber, List<String> activityIds);
+       Passenger signUpForActivity(int passengerNumber, String activityId);
+       List<Activity> getSignedUpActivities(int passengerNumber);
+       PassengerDetailsResponse getPassengerDetails(int passengerNumber);
+
+
+   }
+
+   interface TravelPackageService {
+       TravelPackageItinerary getTravelPackageItinerary(String packageId);
+
+       PassengerListResponse getPassengerList(String packageId);
+   }
+
+   class ActivityServiceImpl implements ActivityService {
+        @Autowired
+            private ActivityRepository activityRepository;
+            public Activity signUpPassenger(Passenger passenger, String activityId);
+            public Activity findActivityById(String activityId);
+            public Activity saveActivity(Activity activity);
+            public List<AvailableActivityResponse> getAvailableActivities();
+
+            private List<AvailableActivityResponse> mapToAvailableActivityResponseList();
+
+   }
+
+   class PassengerServiceImpl implements PassengerService  {
+
+       @Autowired
+       private StandardPassengerRepository standardPassengerRepository;
+
+       @Autowired
+       private PremiumPassengerRepository premiumPassengerRepository;
+
+       @Autowired
+       private GoldPassengerRepository goldPassengerRepository;
+
+       @Autowired
+       private ActivityRepository activityRepository;
+
+       @Autowired
+       private ActivityService activityService;
+
+       public Passenger signUpForActivities(int passengerNumber, List<String> activityIds);
+       public Passenger signUpForActivity(int passengerNumber, String activityId);
+       public List<Activity> getSignedUpActivities(int passengerNumber);
+       public PassengerDetailsResponse getPassengerDetails(int passengerNumber);
+
+   }
+
+
+   class TravelPackageServiceImpl implements TravelPackageService {
+
+       @Autowired
+       private TravelPackageRepository travelPackageRepository;
+       public TravelPackageItinerary getTravelPackageItinerary(String packageId);
+       public PassengerListResponse getPassengerList(String packageId);
+
+   }
+
+
+@enduml
